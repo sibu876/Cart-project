@@ -55,8 +55,8 @@ function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left Side */}
+    <div className="flex min-h-screen flex-col md:flex-row">
+      {/* Left Side - Hidden on small screens */}
       <div className="hidden md:flex w-1/2 relative bg-gray-800">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-yellow-400 opacity-80"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-8 text-center">
@@ -69,20 +69,20 @@ function Signup() {
         </div>
       </div>
 
-      {/* Right Side Full Card */}
+      {/* Right Side - Full Form */}
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-100">
-        <div className="w-full h-full p-12 flex flex-col justify-center">
-          <div className="bg-white shadow-xl rounded-xl p-10 w-full h-full flex flex-col justify-center">
-            <h2 className="text-3xl font-semibold text-center mb-8 text-gray-700">
+        <div className="w-full min-h-screen p-6 md:p-12 flex flex-col justify-center">
+          <div className="bg-white shadow-xl rounded-none md:rounded-xl p-6 md:p-10 w-full h-full flex flex-col justify-center">
+            <h2 className="text-3xl font-semibold text-center mb-6 md:mb-8 text-gray-700">
               Sign Up
             </h2>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 md:gap-6">
               {/* Username */}
               <div>
                 <label
                   htmlFor="user"
-                  className="block text-sm font-medium text-gray-600 mb-2"
+                  className="block text-sm font-medium text-gray-600 mb-1 md:mb-2"
                 >
                   Username
                 </label>
@@ -91,7 +91,7 @@ function Signup() {
                   type="text"
                   value={user}
                   onChange={(e) => setUser(e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full p-3 md:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 {userError && (
                   <p className="text-red-500 text-sm mt-1">{userError}</p>
@@ -102,7 +102,7 @@ function Signup() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-600 mb-2"
+                  className="block text-sm font-medium text-gray-600 mb-1 md:mb-2"
                 >
                   Email
                 </label>
@@ -111,7 +111,7 @@ function Signup() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full p-3 md:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 {emailError && (
                   <p className="text-red-500 text-sm mt-1">{emailError}</p>
@@ -122,7 +122,7 @@ function Signup() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-gray-600 mb-2"
+                  className="block text-sm font-medium text-gray-600 mb-1 md:mb-2"
                 >
                   Password
                 </label>
@@ -131,7 +131,7 @@ function Signup() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="w-full p-3 md:p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 {passwordError && (
                   <p className="text-red-500 text-sm mt-1">{passwordError}</p>
@@ -140,7 +140,7 @@ function Signup() {
 
               <button
                 type="submit"
-                className="w-full py-4 bg-yellow-400 text-gray-800 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
+                className="w-full py-3 md:py-4 bg-yellow-400 text-gray-800 font-semibold rounded-lg hover:bg-yellow-500 transition-colors"
               >
                 Sign Up
               </button>
@@ -150,7 +150,7 @@ function Signup() {
               <p className="text-center text-green-500 mt-4">{status}</p>
             )}
 
-            <div className="mt-8 text-center text-gray-600">
+            <div className="mt-6 md:mt-8 text-center text-gray-600">
               <p>
                 Already have an account?{' '}
                 <NavLink
