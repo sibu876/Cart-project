@@ -4,14 +4,11 @@ import { addtoCart } from '../../redux/CartSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  useEffect(() => {
-    document.title = "BargainBay - Home";
-  }, []);
-
   const [cartData, setCartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showTopButton, setShowTopButton] = useState(false); // State for back-to-top button
 
   const user = useSelector((state) => state.auth.user);
   const cartItems = useSelector((state) => state.cart.items);
@@ -19,6 +16,12 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Set page title
+  useEffect(() => {
+    document.title = "BargainBay - Home";
+  }, []);
+
+  // Fetch products
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,10 +38,12 @@ const Home = () => {
     fetchData();
   }, []);
 
+  // Flatten all products
   const flattenedProducts = cartData?.carts
     ? cartData.carts.flatMap(cart => cart.products)
     : [];
 
+  // Handle add to cart or redirect to login
   const handleUser = (product) => {
     if (!user) {
       sessionStorage.setItem('product', JSON.stringify(product));
@@ -46,6 +51,24 @@ const Home = () => {
     } else {
       dispatch(addtoCart(product));
     }
+  };
+
+  // Show back-to-top button when scrolled down
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowTopButton(true);
+      } else {
+        setShowTopButton(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   if (loading) {
@@ -75,7 +98,7 @@ const Home = () => {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto px-6 py-8 font-sans bg-gray-50">
+    <div className="max-w-screen-xl mx-auto px-6 py-8 font-sans bg-gray-50 relative">
       <h1 className="text-4xl font-extrabold tracking-wide mb-8 text-gray-800 text-center">
         Welcome to <span className="text-green-500">BargainBay</span>
       </h1>
@@ -161,7 +184,6 @@ const Home = () => {
               className="w-full h-56 object-cover rounded-xl mb-4"
             />
 
-            {/* Discount in Modal */}
             {selectedProduct.discountPercentage > 0 && (
               <p className="text-sm font-semibold text-white bg-gradient-to-r from-red-500 to-pink-500 px-2 py-1 rounded-full inline-block mt-2">
                 {selectedProduct.discountPercentage}% OFF
@@ -181,6 +203,20 @@ const Home = () => {
           </div>
         </div>
       )}
+
+      {/* Back to Top Button */}
+   {/* Back to Top Button */}
+{showTopButton && (
+  <button
+    onClick={scrollToTop}
+    className="fixed bottom-8 right-8 p-5 rounded-full bg-yellow-200 text-gray-800 shadow-2xl hover:bg-yellow-500 transition-transform transform hover:scale-125 animate-fadeIn z-50"
+    title="Back to Top"
+    style={{ animation: 'fadeIn 0.5s' }}
+  >
+    ↑
+  </button>
+)}
+
     </div>
   );
 };
