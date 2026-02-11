@@ -56,7 +56,7 @@ function Cart() {
             </h2>
             <button
               onClick={() => navigate('/')}
-              className="px-6 py-2 bg-sky-500 text-white font-semibold rounded-xl 
+              className="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-xl 
               hover:bg-sky-600 transition-all duration-200 ease-in-out shadow-sm"
             >
               Go to Home
